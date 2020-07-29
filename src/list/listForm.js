@@ -1,15 +1,24 @@
 import React from "react";
+import { generate } from "shortid";
 import "./list.css";
 
+const initial_state = {
+    todoTitle: ""
+};
+
 export default class ListForm extends React.Component {
-    state = {};
+    state = initial_state;
 
     handleSubmit = e => {
         e.preventDefault();
-        this.setState({ createdAt: +new Date(), completed: false }, () => {
-            console.log("Submiting");
-            this.props.add(this.state);
-        });
+        this.setState(
+            { id: generate(), createdAt: +new Date(), completed: false },
+            () => {
+                console.log("Submiting");
+                this.props.add(this.state);
+                this.setState(initial_state);
+            }
+        );
     };
 
     handleChange = e => {
@@ -29,6 +38,7 @@ export default class ListForm extends React.Component {
                     <div className="formGroup">
                         <label htmlFor="todoTitle">Todo Task</label>
                         <input
+                            value={this.state.todoTitle}
                             onChange={this.handleChange}
                             type="text"
                             name="todoTitle"

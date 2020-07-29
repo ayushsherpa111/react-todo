@@ -5,7 +5,8 @@ import "./list.css";
 
 export default class TodoList extends React.Component {
     state = {
-        todos: [{ todoTitle: "BRuh cum", completed: true }]
+        todos: [{ todoTitle: "Bruh", complete: true }],
+        task: "Completed"
     };
 
     addTodo(e) {
@@ -13,14 +14,13 @@ export default class TodoList extends React.Component {
         const todos = this.state.todos;
         todos.push(e);
         this.setState({ todos });
-        console.log(this.state);
     }
 
     render() {
         return (
             <div className="todoList">
                 <div className="list">
-                    <MyList todos={this.state.todos} />
+                    <MyList type={this.state.task} todos={this.state.todos} />
                 </div>
                 <div className="listForm">
                     <ListForm add={e => this.addTodo(e)} />

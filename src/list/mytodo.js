@@ -1,5 +1,4 @@
 import React from "react";
-import shortid from "shortid";
 
 export default function MyList(props) {
     return (
@@ -22,9 +21,21 @@ export default function MyList(props) {
                     </div>
                 )}
             </h1>
+            {props.todos.length > 0 ? (
+                <div className="selectType">
+                    <h3
+                        className={
+                            props.type === "Completed" ? "selected" : null
+                        }
+                    >
+                        Completed
+                    </h3>
+                    <h3>Incomplete</h3>
+                </div>
+            ) : null}
             <ul>
                 {props.todos.map(e => (
-                    <li key={shortid.generate()}>
+                    <li key={e.id}>
                         <img
                             src={
                                 "images/" +
@@ -36,11 +47,12 @@ export default function MyList(props) {
                         <span>{e.todoTitle}</span>
                         <div className="config">
                             <img
+                                alt="task status"
                                 src={
                                     "images/" +
                                     (e.completed
-                                        ? "mark_complete"
-                                        : "mark_incomplete") +
+                                        ? "mark_incomplete"
+                                        : "mark_complete") +
                                     ".png"
                                 }
                             />
