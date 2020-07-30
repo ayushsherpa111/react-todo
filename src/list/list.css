@@ -72,9 +72,34 @@ input[type="datetime-local"] {
     height: 30px;
     cursor: pointer;
     justify-content: baseline;
+    animation: fadeIn 700ms forwards;
 }
 
-.myList ul li img {
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeAway {
+    animation: fadeIn 500ms forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.stat {
     filter: grayscale(1);
     width: 30px;
     transition: all 220ms ease;
@@ -85,7 +110,7 @@ input[type="datetime-local"] {
     background-color: #3c3c3c3c;
 }
 
-.myList ul li:hover img {
+.myList ul li:hover .stat {
     filter: grayscale(0);
 }
 
@@ -129,12 +154,27 @@ input[type="datetime-local"] {
 
 .config {
     margin-left: auto;
-    transition: all 220ms ease;
-    visibility: hidden;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    transition: opacity 200ms linear;
+}
+
+.config p {
+    font-size: 15px;
+    margin-right: 10px;
+}
+
+.config span {
+    font-size: 20px;
+}
+
+.config img {
+    width: 30px;
 }
 
 .myList ul li:hover .config {
-    visibility: visible;
+    opacity: 1;
 }
 
 .selectType {
@@ -154,4 +194,5 @@ input[type="datetime-local"] {
 .selected {
     color: #ffa924;
     font-weight: 600;
+    transition: all 150ms linear;
 }

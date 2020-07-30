@@ -1,4 +1,5 @@
 import React from "react";
+import { sort_based, calc_difference } from "../utils/tools";
 
 export default function MyList(props) {
     return (
@@ -27,38 +28,70 @@ export default function MyList(props) {
                         className={
                             props.type === "Completed" ? "selected" : null
                         }
+                        onClick={() => props.changeType("Completed")}
                     >
                         Completed
                     </h3>
-                    <h3>Incomplete</h3>
+                    <h3
+                        className={
+                            props.type === "Incomplete" ? "selected" : null
+                        }
+                        onClick={() => props.changeType("Incomplete")}
+                    >
+                        Incomplete
+                    </h3>
                 </div>
             ) : null}
             <ul>
-                {props.todos.map(e => (
-                    <li key={e.id}>
-                        <img
-                            src={
-                                "images/" +
-                                (e.completed ? "complete" : "incomplete") +
-                                ".png"
-                            }
-                            alt=""
-                        />
-                        <span>{e.todoTitle}</span>
-                        <div className="config">
+                {sort_based(props.todos, props.type).map(e => {
+                    const days = calc_difference(e.createdAt, e.todoDate);
+                    let was_clicked = false;
+                    return (
+                        <li key={e.id} className={was_clicked ? "fadeOut" : ""}>
                             <img
-                                alt="task status"
+                                className="stat"
                                 src={
                                     "images/" +
-                                    (e.completed
-                                        ? "mark_incomplete"
-                                        : "mark_complete") +
+                                    (e.completed ? "complete" : "incomplete") +
                                     ".png"
                                 }
+                                alt=""
                             />
-                        </div>
-                    </li>
-                ))}
+                            <span>{e.todoTitle}</span>
+                            <div className="config">
+                                <p>
+                                    Time Remaining:{" "}
+                                    <span
+                                        style={
+                                            days <= 2
+                                                ? {
+                                                      color: "#ff7700",
+                                                      fontWeight: 800
+                                                  }
+                                                : { color: "#00ff00" }
+                                        }
+                                    >
+                                        {days}
+                                    </span>
+                                </p>
+                                <img
+                                    alt="task status"
+                                    onClick={() => {
+                                        was_clicked = true;
+                                        props.mark(e.id, !e.completed);
+                                    }}
+                                    src={
+                                        "images/" +
+                                        (e.completed
+                                            ? "mark_incomplete"
+                                            : "mark_complete") +
+                                        ".png"
+                                    }
+                                />
+                            </div>
+                        </li>
+                    );
+                })}
             </ul>
         </div>
     );

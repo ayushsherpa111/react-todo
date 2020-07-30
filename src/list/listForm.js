@@ -1,9 +1,11 @@
 import React from "react";
 import { generate } from "shortid";
+import { fix_stupid_format } from "../utils/tools";
 import "./list.css";
 
 const initial_state = {
-    todoTitle: ""
+    todoTitle: "",
+    todoDate: fix_stupid_format(new Date())
 };
 
 export default class ListForm extends React.Component {
@@ -12,7 +14,11 @@ export default class ListForm extends React.Component {
     handleSubmit = e => {
         e.preventDefault();
         this.setState(
-            { id: generate(), createdAt: +new Date(), completed: false },
+            {
+                id: generate(),
+                createdAt: new Date(),
+                completed: false
+            },
             () => {
                 console.log("Submiting");
                 this.props.add(this.state);
@@ -22,15 +28,22 @@ export default class ListForm extends React.Component {
     };
 
     handleChange = e => {
+        console.log(e.target.value);
+        let data = "";
+        if (e.target.name === "todoDate") {
+            const date = new Date(e.target.value);
+            data = fix_stupid_format(date);
+        } else {
+            data = e.target.value;
+        }
+        console.log(data);
         this.setState({
-            [e.target.name]:
-                e.target.name === "todoDate"
-                    ? +new Date(e.target.value)
-                    : e.target.value
+            [e.target.name]: data
         });
     };
 
     render() {
+        console.log(this.state.todoDate);
         return (
             <div className="todoForm">
                 <h1>Create Task</h1>
@@ -49,6 +62,7 @@ export default class ListForm extends React.Component {
                     <div className="formGroup">
                         <label htmlFor="todoDate">Due Date</label>
                         <input
+                            value={this.state.todoDate}
                             onChange={this.handleChange}
                             type="datetime-local"
                             name="todoDate"
