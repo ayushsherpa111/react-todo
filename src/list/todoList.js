@@ -9,6 +9,13 @@ export default class TodoList extends React.Component {
         task: "Incomplete"
     };
 
+    deleteTask(id) {
+        console.log("deleting task " + id);
+        this.setState({
+            todos: [...this.state.todos].filter(e => e.id !== id)
+        });
+    }
+
     changeList(task) {
         console.log(task);
         this.setState({ task });
@@ -21,12 +28,14 @@ export default class TodoList extends React.Component {
         this.setState({ todos });
     }
 
-    mark_as(id, status) {
-        const todos = this.state.todos;
-        console.log(status);
-        todos[todos.findIndex(e => e.id === id)].completed = status;
+    mark_as(id, completed) {
+        let todos = [...this.state.todos];
+        // todos[todos.findIndex(e => e.id === id)].completed = status;
+        // console.log(todos);
         console.log(todos);
-        this.setState({ todos });
+        this.setState({
+            todos: todos.map(e => (e.id === id ? { ...e, completed } : e))
+        });
     }
 
     render() {
@@ -37,6 +46,7 @@ export default class TodoList extends React.Component {
                         changeType={this.changeList.bind(this)}
                         type={this.state.task}
                         todos={this.state.todos}
+                        delete={this.deleteTask.bind(this)}
                         mark={this.mark_as.bind(this)}
                     />
                 </div>

@@ -25,6 +25,12 @@ export default function MyList(props) {
             {props.todos.length > 0 ? (
                 <div className="selectType">
                     <h3
+                        className={props.type === "All" ? "selected" : null}
+                        onClick={() => props.changeType("All")}
+                    >
+                        All
+                    </h3>
+                    <h3
                         className={
                             props.type === "Completed" ? "selected" : null
                         }
@@ -48,6 +54,12 @@ export default function MyList(props) {
                     let was_clicked = false;
                     return (
                         <li key={e.id} className={was_clicked ? "fadeOut" : ""}>
+                            <div
+                                className="close"
+                                onClick={() => props.delete(e.id)}
+                            >
+                                <img src="images/delete.png" alt="" />
+                            </div>
                             <img
                                 className="stat"
                                 src={
@@ -57,10 +69,10 @@ export default function MyList(props) {
                                 }
                                 alt=""
                             />
-                            <span>{e.todoTitle}</span>
-                            <div className="config">
+                            <div className="sideTitle">
+                                <span>{e.todoTitle}</span>
                                 <p>
-                                    Time Remaining:{" "}
+                                    Time Remaining:&nbsp;
                                     <span
                                         style={
                                             days <= 2
@@ -74,6 +86,8 @@ export default function MyList(props) {
                                         {days}
                                     </span>
                                 </p>
+                            </div>
+                            <div className="config">
                                 <img
                                     alt="task status"
                                     onClick={() => {

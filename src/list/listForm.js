@@ -28,7 +28,6 @@ export default class ListForm extends React.Component {
     };
 
     handleChange = e => {
-        console.log(e.target.value);
         let data = "";
         if (e.target.name === "todoDate") {
             const date = new Date(e.target.value);
@@ -36,14 +35,12 @@ export default class ListForm extends React.Component {
         } else {
             data = e.target.value;
         }
-        console.log(data);
         this.setState({
             [e.target.name]: data
         });
     };
 
     render() {
-        console.log(this.state.todoDate);
         return (
             <div className="todoForm">
                 <h1>Create Task</h1>
