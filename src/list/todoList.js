@@ -29,13 +29,9 @@ export default class TodoList extends React.Component {
     }
 
     mark_as(id, completed) {
-        let todos = [...this.state.todos];
-        // todos[todos.findIndex(e => e.id === id)].completed = status;
-        // console.log(todos);
-        console.log(todos);
-        this.setState({
-            todos: todos.map(e => (e.id === id ? { ...e, completed } : e))
-        });
+        this.setState(state => ({
+            todos: state.todos.map(e => (e.id === id ? { ...e, completed } : e))
+        }));
     }
 
     render() {

@@ -1,10 +1,23 @@
 .todoList {
-    width: 55%;
+    /* width: 55%; */
     display: flex;
     margin: 7rem auto;
     border-radius: 10px;
     padding: 17px 11px;
     box-shadow: 1px 5px 20px #222121;
+}
+
+@media all and (max-width: 1400px) {
+    .todoList {
+        width: 69%;
+        /* nice */
+    }
+}
+
+@media all and (min-width: 1500px) {
+    .todoList {
+        width: 65%;
+    }
 }
 
 h1 {
